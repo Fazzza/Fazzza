@@ -1,0 +1,147 @@
+- 👋 Hi, I’m @karakee
+- 👀 I’m interested in ...
+- 🌱 I’m currently learning ...
+- 💞️ I’m looking to collaborate on ...
+- 📫 How to reach me ...
+- 😄 Pronouns: ...
+- ⚡ Fun fact: ...
+
+<!---
+Fazzza/Fazzza is a ✨ special ✨ repository because its `karakee cafe` (this file) appears on your GitHub profile.
+You can click the Preview link to take a look at your changes.
+--->
+flutter create karakee_cafe   # for Flutter
+npx react-native init KarakeeCafe   # for React Native
+class HomePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("Karakee Cafe")),
+      body: ListView(
+        children: [
+          Text("Welcome to Karakee Cafe"),
+          // Add more content here
+        ],
+      ),
+    );
+  }
+}
+import React from 'react';
+import { View, Text, ScrollView } from 'react-native';
+
+const HomePage = () => (
+  <ScrollView>
+    <View>
+      <Text>Welcome to Karakee Cafe</Text>
+      {/* Additional content */}
+    </View>
+  </ScrollView>
+);
+export default HomePage;
+class StaffPage extends StatelessWidget {
+  final List<Map> staff = [
+    {"name": "John Doe", "phone": "123-456-7890", "photo": "url"},
+    // Add more staff members
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("Staff")),
+      body: ListView.builder(
+        itemCount: staff.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            leading: CircleAvatar(backgroundImage: NetworkImage(staff[index]['photo'])),
+            title: Text(staff[index]['name']),
+            subtitle: Text(staff[index]['phone']),
+          );
+        },
+      ),
+    );
+  }
+}
+import React from 'react';
+import { View, Text, FlatList, Image } from 'react-native';
+
+const staff = [
+  { id: '1', name: 'John Doe', phone: '123-456-7890', photo: 'url' },
+  // Add more staff members
+];
+
+const StaffPage = () => (
+  <FlatList
+    data={staff}
+    keyExtractor={item => item.id}
+    renderItem={({ item }) => (
+      <View>
+        <Image source={{ uri: item.photo }} style={{ width: 50, height: 50 }} />
+        <Text>{item.name}</Text>
+        <Text>{item.phone}</Text>
+      </View>
+    )}
+  />
+);
+
+export default StaffPage;
+class SurveyPage extends StatefulWidget {
+  @override
+  _SurveyPageState createState() => _SurveyPageState();
+}
+
+class _SurveyPageState extends State<SurveyPage> {
+  final _formKey = GlobalKey<FormState>();
+  String cleanlinessLevel = '';
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("Cleaning Survey")),
+      body: Form(
+        key: _formKey,
+        child: Column(
+          children: [
+            TextFormField(
+              decoration: InputDecoration(labelText: 'Cleanliness Level'),
+              onSaved: (value) => cleanlinessLevel = value!,
+            ),
+            ElevatedButton(
+              onPressed: () {
+                if (_formKey.currentState!.validate()) {
+                  _formKey.currentState!.save();
+                  // Submit survey data to backend
+                }
+              },
+              child: Text('Submit Survey'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+import React, { useState } from 'react';
+import { View, TextInput, Button, Text } from 'react-native';
+
+const SurveyPage = () => {
+  const [cleanlinessLevel, setCleanlinessLevel] = useState('');
+
+  const handleSubmit = () => {
+    // Submit survey data to backend
+    console.log('Submitted:', cleanlinessLevel);
+  };
+
+  return (
+    <View>
+      <Text>Cleaning Survey</Text>
+      <TextInput
+        placeholder="Cleanliness Level"
+        value={cleanlinessLevel}
+        onChangeText={setCleanlinessLevel}
+      />
+      <Button title="Submit Survey" onPress={handleSubmit} />
+    </View>
+  );
+};
+
+export default SurveyPage;
